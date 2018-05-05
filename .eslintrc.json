@@ -1,0 +1,19 @@
+{
+	"extends": [ "eslint:recommended" ],
+	"parser": "eslint-disable-parsing",
+	"parserOptions": { "ecmaVersion": 2018, "sourceType" : "module" } ,
+	"env": { "browser": true, "es6": true },
+	"globals": { "WebAssembly": true },
+	"rules": {
+		"no-irregular-whitespace": "off",
+		"no-constant-condition": "warn",
+		"no-unused-vars": "warn",
+		"no-cond-assign": "warn",
+		"no-empty": "warn",
+		"no-console": "warn",
+		"no-debugger": "warn",
+		"no-unreachable": "warn",
+		"no-mixed-spaces-and-tabs": "warn",
+		"no-inner-declarations": "off"
+	}
+}
