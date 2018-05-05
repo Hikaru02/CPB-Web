@@ -23,7 +23,9 @@ async function main ( ) {
 				target.addEventListener( 'drop', async e => {
 					let url = e.dataTransfer.getData( 'text/uri-list' )
 					if ( ! url ) return
-					target.querySelector( 'img' ).src = url
+					let img = target.querySelector( 'img' )
+					img.src = url
+					img.decode( ).catch( ( ) => img.remove( ) )
 				} )
 				shadow.append( content )
 			}
@@ -52,7 +54,7 @@ async function main ( ) {
 		for ( let file of files ) {
 			let img = new Image
 			img.src = URL.createObjectURL( file )
-			imageArea.append( img )
+			img.decode( ).then( ( ) => imageArea.append( img ) )
 		}
 
 
