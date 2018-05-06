@@ -1,7 +1,10 @@
 window.addEventListener( 'DOMContentLoaded', main )
 
-const query = selector => document.querySelector( selector )
+const query = ( selector, targets = [ document ] ) => {
+	return targets.map( t => t.querySelector( selector ) ).filter( e => !! e ) [ 0 ]
+}
 
+let draging = null
 
 async function main ( ) {
 
@@ -20,13 +23,26 @@ async function main ( ) {
 			for ( let i = 0; i < 3; i ++ ) {
 				let content = document.importNode( columnSetContent, true )
 				let target = content.firstElementChild
-				target.addEventListener( 'drop', async e => {
+				let img = target.querySelector( 'img' )
+
+				target.addEventListener( 'dblclick', e => {
+					let to = new Image
+					to.src = img.src
+					imageArea.append( to )
+					img.removeAttribute( 'src' )
+				} )
+
+				target.addEventListener( 'dragstart', e => { draging = img } )
+
+				target.addEventListener( 'drop', e => {
 					let url = e.dataTransfer.getData( 'text/uri-list' )
 					if ( ! url ) return
-					let img = target.querySelector( 'img' )
+					let src = img.src
 					img.src = url
-					img.decode( ).catch( ( ) => img.remove( ) )
+					if ( src ) draging.src = src
+					else draging.removeAttribute( 'src' )
 				} )
+
 				shadow.append( content )
 			}
 
@@ -36,9 +52,10 @@ async function main ( ) {
 
 	customElements.define( 'column-set', ColumnSet )
 
-	for ( let i = 0; i < 5; i++ ) {
+	for ( let i = 0; i < 10; i++ ) {
 		printTarget.append( document.createElement( 'column-set' ) )
 	}
+
 
 
 
@@ -49,12 +66,14 @@ async function main ( ) {
 		const entry = e.dataTransfer.items[ 0 ].webkitGetAsEntry( )
 		if ( ! entry ) return
 		await readEntry( entry )
-		console.log( files )
 
 		for ( let file of files ) {
 			let img = new Image
 			img.src = URL.createObjectURL( file )
-			img.decode( ).then( ( ) => imageArea.append( img ) )
+			img.decode( ).then( ( ) => {
+				img.addEventListener( 'dragstart', e => { draging = img } )
+				imageArea.append( img )
+			}, e => null )
 		}
 
 
