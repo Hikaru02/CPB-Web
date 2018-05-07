@@ -61,6 +61,7 @@ async function main ( ) {
 
 
 	window.addEventListener( 'dragover', e => e.preventDefault( ) )
+	imageArea.addEventListener( 'dragstart', e => { draging = e.target} )
 	imageArea.addEventListener( 'drop', async e => {
 		const files = [ ]
 		const entry = e.dataTransfer.items[ 0 ].webkitGetAsEntry( )
@@ -70,10 +71,7 @@ async function main ( ) {
 		for ( let file of files ) {
 			let img = new Image
 			img.src = URL.createObjectURL( file )
-			img.decode( ).then( ( ) => {
-				img.addEventListener( 'dragstart', e => { draging = img } )
-				imageArea.append( img )
-			}, e => null )
+			img.decode( ).then( ( ) => imageArea.append( img ), e => null )
 		}
 
 

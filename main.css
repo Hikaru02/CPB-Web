@@ -21,7 +21,7 @@ img[src] {
 }
 
 
-right-work {
+left-work {
 	box-sizing: border-box;
 	display: inline-block;
 	overflow-y: auto;
@@ -108,7 +108,7 @@ column-block input:nth-of-type( 3 ) {
 
 
 
-left-select {
+right-select {
 	box-sizing: border-box;
 	display: inline-block;
 	vertical-align: top;
@@ -128,14 +128,18 @@ top-menu {
 bottom-image {
 	box-sizing: border-box;
 	display: inline-block;
-	overflow-y: auto;
+	overflow-y: scroll;
 	width: 100%;
 	height: 80%;
 	border: ridge 1vh #DFD;
 }
 
 bottom-image img {
-	height: 25%;
+	vertical-align: top;
+	width: 13.6vw;
+	height: 10.2vw;
+	object-fit: contain;
+	border: solid 0.5vw black;
 }
 
 
@@ -143,8 +147,8 @@ bottom-image img {
 	:root {
 		-webkit-filter:blur( 0 );
 	}
-	left-select  { display: none; }
-	right-work {
+	right-select  { display: none; }
+	left-work {
 		box-sizing: border-box;
 		display: block;
 		height: auto;
